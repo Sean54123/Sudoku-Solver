@@ -52,17 +52,34 @@ def grid_complete_checker(grid):
     
 def row_checker(grid, current_position):
     for i in range(len(grid)):
-        element_check = grid[current_position[0]][i] #loop through current row
+        element_check = grid[current_position[0]][i] #loop through cols in current row
         print(element_check)
         if grid[current_position[0]][current_position[1]] == 0:
             row_status = "Please enter guess in element, not complete"
-        elif element_check == grid[current_position[0]][current_position[1]] and current_position[0] != i and element_check != 0: #checks other elements in rows to see if the number is already in row (excluding other empties)
+        elif element_check == grid[current_position[0]][current_position[1]] and current_position[1] != i and element_check != 0: #checks other elements in row to see if the number is already in row (excluding other empties)
             row_status = "Guess not valid"
             break #break out of loop cause not a valid guess
         else: 
             row_status = "Guess Valid"
     return row_status
 
+def col_checker(grid, current_position):
+    for j in range(len(grid)):
+        element_check = grid[j][current_position[1]] #loop through current col
+        print(element_check)
+        if grid[current_position[0]][current_position[1]] == 0:
+            col_status = "Please enter guess in element, not complete"
+        elif element_check == grid[current_position[0]][current_position[1]] and current_position[0] != j and element_check != 0: #checks other elements in col to see if the number is already in col (excluding other empties)
+            col_status = "Guess not valid"
+            break #break out of loop cause not a valid guess
+        else: 
+            col_status = "Guess Valid"
+    return col_status
+
+def check_local_square(grid, current_position):
+    current_position
+    for i in range(len(grid)):
+        for j in range(len)
                     
 #Main body, while true...            
 print_grid(grid)
@@ -70,7 +87,8 @@ empty_spaces = find_empty_spaces(grid) #have one as initial empty space at start
 current_position = empty_spaces[0]
 
 
-current_position = [0, 0]
+current_position = [0, 1]
+print(col_checker(grid, current_position))
 print(row_checker(grid, current_position))
 
 
