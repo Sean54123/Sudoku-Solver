@@ -13,7 +13,7 @@ grid = [
     [9,0,4,0,6,0,0,0,5],
     [0,7,0,3,0,0,0,1,2],
     [1,2,0,0,0,7,4,0,0],
-    [0,4,9,2,0,6,0,0,7]
+    [0,4,9,2,0,6,4,0,7]
 ]
 
 def print_grid(grid):
@@ -65,7 +65,7 @@ def row_checker(grid, current_position):
 
 def col_checker(grid, current_position):
     for j in range(len(grid)):
-        element_check = grid[j][current_position[1]] #loop through current col
+        element_check = grid[j][current_position[1]] #loop through rows in current col
         print(element_check)
         if grid[current_position[0]][current_position[1]] == 0:
             col_status = "Please enter guess in element, not complete"
@@ -77,19 +77,35 @@ def col_checker(grid, current_position):
     return col_status
 
 def check_local_square(grid, current_position):
-    current_position
-    for i in range(len(grid)):
-        for j in range(len)
-                    
+   square_row_start = int(current_position[0] / 3) * 3#local square row start index
+   square_col_start = int(current_position[1] / 3) * 3 #local square column start index
+   print(current_position)
+   for i in range(square_row_start, square_row_start + 3):
+       for j in range(square_col_start, square_col_start +3):
+           element_check = grid[i][j]
+           print([i, j])
+           print(j)
+           print(element_check)
+           if grid[current_position[0]][current_position[1]] == 0:
+               square_status = "Please enter guess in element, not complete"
+           elif (element_check == grid[current_position[0]][current_position[1]] and (current_position[0] != i or current_position[1] != j) and element_check != 0): #checks other elements in local square to see if the number is already in row (excluding other empties)
+               square_status = "Guess not valid, number already in local square"
+               return square_status #could use breaks (2, 1 per loop) and contiunue
+           else: 
+               square_status = "Guess Valid"
+   return square_status
+
 #Main body, while true...            
 print_grid(grid)
 empty_spaces = find_empty_spaces(grid) #have one as initial empty space at start of main flow
 current_position = empty_spaces[0]
 
 
-current_position = [0, 1]
-print(col_checker(grid, current_position))
-print(row_checker(grid, current_position))
+current_position = [7, 6]
+print(grid[current_position[0]][current_position[1]])
+# print(col_checker(grid, current_position))
+# print(row_checker(grid, current_position))
+print(check_local_square(grid, current_position))
 
 
 #grid_complete_checker(grid)
