@@ -5,6 +5,7 @@ Created on Fri Apr 23 21:40:22 2021
 @author: seant
 """
 import sys 
+
 grid = [
     [7,8,0,4,0,0,1,2,0],
     [6,0,0,0,7,5,0,0,9],
@@ -104,44 +105,27 @@ def check_local_square(grid, current_position):
                square_status = True
    return square_status
 
-if __name__ == "__main__":
+def recursive_solver(grid, guesses):
     empty_spaces = find_empty_spaces(grid)
-    empty_space_index = 0 #start with first empty element
-    guess_start = 1
+    current_position = empty_spaces[0]
+    for guess in range(1, 10):
+        grid[current_position[0]][current_position[1]] = guess
+        guesses +=  1
+        if row_checker(grid, current_position) == True and col_checker(grid, current_position) == True and check_local_square(grid, current_position) == True:
+            if grid_complete_checker(grid, guesses) == True:   
+                    sys.exit()
+            #if entry is valid, call the solver function again recursively
+            recursive_solver(grid, guesses)
+        else:
+            continue
+    grid[current_position[0]][current_position[1]] = 0
+    
+if __name__ == "__main__":
     guesses = 0
     while True: #indefinite loop
-        current_position = empty_spaces[empty_space_index]
-        for guess in range(guess_start, 10): #take current position and try numbers 1 to 9, perform tests to see if all pass
-            guesses += guesses
-            grid[current_position[0]][current_position[1]] = guess
-            if guess_start == 9:
-                empty_space_index = empty_space_index - 1
-                grid[current_position[0]][current_position[1]] = 0
-                if grid[empty_spaces[empty_space_index][0]][empty_spaces[empty_space_index][1]] == 9:
-                    guess_start = 9
-                    break
-                else:
-                    guess_start = grid[empty_spaces[empty_space_index][0]][empty_spaces[empty_space_index][1]] + 1
-                    break
-                break
-            if row_checker(grid, current_position) == True and col_checker(grid, current_position) == True and check_local_square(grid, current_position) == True:
-                if grid_complete_checker(grid, guesses) == True:   
-                    sys.exit()
-                else:
-                    empty_space_index = empty_space_index + 1
-                    guess_start = 1
-                break          
-            elif guess == 9:
-                empty_space_index = empty_space_index - 1
-                grid[current_position[0]][current_position[1]] = 0
-                if grid[empty_spaces[empty_space_index][0]][empty_spaces[empty_space_index][1]] == 9:
-                    guess_start = 9
-                    break
-                else:
-                    guess_start = grid[empty_spaces[empty_space_index][0]][empty_spaces[empty_space_index][1]] + 1
-                    break
-            else:
-                continue
+        recursive_solver(grid, guesses)
+
+              
 
         
         
